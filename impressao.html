@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>IMPRESSÃO FAIXAS</title>
+	<link href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&family=Corinthia:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<style>
+	html{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		padding: 10px;
+	}
+
+	#a4{
+		width: 760px;
+		height: 1085px;
+	}	
+
+	.faixa{
+		box-shadow: inset 0 0 0 1px #000;
+		width: 100%;
+		height: 155px;
+		align-items: center;
+		align-content: center;
+	}
+
+	.sub-faixa{
+		display: flex;
+		height: 90%;
+		align-items: end;
+		align-content: flex-end;
+	}
+
+	.val{
+		width: 20%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-bottom: 10px;
+	}
+
+	.centro{
+		width: 40%;
+		height: 140px;
+		display: flex;
+		flex-direction: column;
+		margin-left: 15%;
+		align-items: center;
+		align-content: center;
+		justify-content: center;
+	}
+
+	.centro div {
+		display: flex;
+	}
+
+	.centro img{
+		height: 90px;
+		width: auto;
+	}
+
+	.categoria{
+		font-family: "Corinthia", cursive;
+		font-size: 25px;
+		color: #D4AF37;
+		text-shadow:
+			0 1px 0 rgba(255,255,255,0.4),
+			0 2px 4px rgba(0,0,0,0.3);
+	}
+
+	.nome{
+		margin-top: -10px;
+		font-family: "Andika";
+		font-size: 15px;
+	}
+
+	/* Área de entrada */
+	#entrada{
+		width: 360px;
+		padding: 20px;
+		margin-bottom: 20px;
+		border: 1px solid #ccc;
+		border-radius: 10px;
+		font-family: "Andika";
+		background: #f8f8f8;
+	}
+
+	#entrada input{
+		width: 100%;
+		padding: 8px;
+		margin-bottom: 10px;
+		box-sizing: border-box;
+		font-family: "Andika";
+	}
+
+	#entrada button{
+		width: 100%;
+		padding: 10px;
+		cursor: pointer;
+		font-family: "Andika";
+		font-weight: bold;
+	}
+
+	@media print{
+		#entrada{
+			display: none;
+		}
+	}
+</style>
+
+<body>
+
+	<div id="entrada">
+		<label>Categoria</label>
+		<input type="text" id="inputCategoria" placeholder="Ex: Sabonete">
+
+		<label>Nome</label>
+		<input type="text" id="inputNome" placeholder="Ex: Açafrão e Dolomita">
+
+		<label>Validade</label>
+		<input type="text" id="inputValidade" placeholder="Ex: 30/12/2026">
+
+		<button onclick="gerarFaixas()">Gerar faixas</button>
+	</div>
+
+	<div id="a4"></div>
+
+	<script>
+		function gerarFaixas() {
+			const categoria = document.getElementById("inputCategoria").value.trim();
+			const nome = document.getElementById("inputNome").value.trim();
+			const validade = document.getElementById("inputValidade").value.trim();
+
+			if (!categoria || !nome || !validade) {
+				alert("Preencha Categoria, Nome e Validade.");
+				return;
+			}
+
+			const area = document.getElementById("a4");
+			area.innerHTML = "";
+
+			for (let i = 0; i < 7; i++) {
+				area.innerHTML += `
+					<div class="faixa">
+						<div class="sub-faixa">
+							<div class="val">
+								<div>Validade</div>
+								<div>${validade}</div>
+							</div>
+							<div class="centro">
+								<div><img src="logotipo_alquime.png"></div>
+								<div class="categoria">${categoria}</div>
+								<div class="nome">${nome}</div>
+							</div>
+						</div>
+					</div>
+				`;
+			}
+				// Pequena pausa para garantir a renderização
+	setTimeout(() => {
+		window.print();
+	}, 200);
+		}
+	</script>
+
+</body>
+</html>
